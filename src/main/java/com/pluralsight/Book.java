@@ -1,10 +1,12 @@
+package com.pluralsight;
+
 public class Book {
     private int id;
     private String title;
     private boolean isCheckedOut;
     private String checkedOutTo;
 
-    public Book(int id, String checkedOutTo, String title, boolean isCheckedOut) {
+    public Book (int id, String checkedOutTo, String title, boolean isCheckedOut) {
         this.id = id;
         this.checkedOutTo = checkedOutTo;
         this.title = title;
@@ -12,6 +14,7 @@ public class Book {
     }
 
     public int getId() {
+
         return id;
     }
 
@@ -49,5 +52,10 @@ public class Book {
 
     public void checkIn() {
 
+    }
+
+    @Override
+    public String toString() {
+        return id + " " + title ;
     }
 }
