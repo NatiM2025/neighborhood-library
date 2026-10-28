@@ -1,15 +1,14 @@
 package com.pluralsight;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
     private static Book[] books = new Book[20];
-    String customerName = "";
+
     static Scanner input = new Scanner(System.in);
 
     public static void main(String[] args) {
-        // //////// List /////////
+        // //////// List of all books /////////
         books[0] = new Book(1, "", "Genesis", false);
         books[1] = new Book(2, "", "Exodus", false);
         books[2] = new Book(3, "", "Leviticus", false);
@@ -30,20 +29,19 @@ public class Main {
         books[17] = new Book(18, "", "Matthew", false);
         books[18] = new Book(19, "", "Mark", false);
         books[19] = new Book(20, "", "Luke", false);
-      //  Arrays.sort(books);
 
 
         // /////// List chose ////
         boolean isDone = false;
+        System.out.println();
         System.out.println("====Welcome to neighborhood library====");
         do {
             try {
-                System.out.println("Please use the numbers to choose.");
                 System.out.println();
+                System.out.println("Please use the numbers to choose.");
                 System.out.println(" 1. List all Available books ");
-                System.out.println(" 2. Return book ");
-                System.out.println(" 3. List all checked out books ");
-                System.out.println(" 4. Exit ");
+                System.out.println(" 2. List all checked out books ");
+                System.out.print(" 3. Exit \n>> ");
 
                 int chose = input.nextInt();
                 input.nextLine();
@@ -51,14 +49,12 @@ public class Main {
                     case 1:
                         listAllBooks();
                         break;
+
                     case 2:
-                        System.out.println("c2");
-                        break;
-                    case 3:
                         checkedOutBooks();
 
                         break;
-                    case 4:
+                    case 3:
                         System.out.println("Thank you! :)");
                         isDone = true;
                         break;
@@ -76,6 +72,9 @@ public class Main {
 
 
     }
+
+
+      // listing all available books for the user and chacking out book
     public static void listAllBooks (){
         try {
 
@@ -84,10 +83,14 @@ public class Main {
                 System.out.println(books[i]);
             }
         }
-        System.out.println("Pleas select a book to checkout ");
+            System.out.println();
+        System.out.println("Pleas select a book to checkout or 0 to exit");
         int userSelection = input.nextInt();
+        if (userSelection == 0){
+            return;
+        }
         input.nextLine();
-        System.out.println(books[userSelection-1]+ " << SELECTED");
+        System.out.println("Book " + books[userSelection-1]+ " << SELECTED");
         System.out.println("Pleas enter your full name to checkout");
         String userName = input.nextLine();
         books[userSelection-1].setCheckedOutTo(userName);
@@ -99,13 +102,34 @@ public class Main {
         }
 
     }
+       // Listing all checkedOutBooks and chacking in book back
     public static void checkedOutBooks (){
         for (int i = 0; i < books.length; i++) {
             if (books[i].isCheckedOut() == true){
                 System.out.println(books[i].getId() + " " + books[i].getTitle() + " To " + books[i].getCheckedOutTo());
+                System.out.println();
+                System.out.println("pleas select\nC to check in\nX to exit");
+                String userInput = input.nextLine();
+                if (userInput.equalsIgnoreCase("c")){
+                    System.out.println("Thank you! Please enter book id Id: ");
+                    int checkedOutBookIdInput = input.nextInt();
+                    input.nextLine();
+                    if (books[checkedOutBookIdInput].isCheckedOut() == true){
+                        books[checkedOutBookIdInput].setCheckedOut(false);
+                        System.out.println("Thank you!");
+                    }
+                } else if (userInput.equalsIgnoreCase("x")) {
+                    return;
+                }
+                else {
+                    System.out.println("invalid input ");
+                }
             }
         }
+        System.out.println("No chacked out books yet. ");
 
+
+        input.close();
     }
 
 }
