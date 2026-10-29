@@ -11,13 +11,13 @@ public class Main {
         // //////// List of all books /////////
         books[0] = new Book(1, "", "Genesis", false);
         books[1] = new Book(2, "", "Exodus", false);
-        books[2] = new Book(3, "", "Leviticus", false);
+        books[2] = new Book(3, "ggg", "Leviticus", true);
         books[3] = new Book(4, "", "Numbers", false);
         books[4] = new Book(5, "", "Deuteronomy", false);
         books[5] = new Book(6, "", "Joshua", false);
         books[6] = new Book(7, "", "Judges", false);
         books[7] = new Book(8, "", "Ruth", false);
-        books[8] = new Book(9, "", "1 Samuel", false);
+        books[8] = new Book(9, "", "1 Samuel", true);
         books[9] = new Book(10, "", "2 Samuel", false);
         books[10] = new Book(11, "", "1 Kings", false);
         books[11] = new Book(12, "", "2 Kings", false);
@@ -70,7 +70,7 @@ public class Main {
 
         }while (!isDone);
 
-
+        input.close();
     }
 
 
@@ -104,32 +104,59 @@ public class Main {
     }
        // Listing all checkedOutBooks and chacking in book back
     public static void checkedOutBooks (){
+        boolean haseCheckedOutBooks = false;
+        System.out.println("Checked out books");
+
         for (int i = 0; i < books.length; i++) {
-            if (books[i].isCheckedOut() == true){
+            if (books[i].isCheckedOut() == true) {
+                haseCheckedOutBooks = true;
                 System.out.println(books[i].getId() + " " + books[i].getTitle() + " To " + books[i].getCheckedOutTo());
-                System.out.println();
-                System.out.println("pleas select\nC to check in\nX to exit");
+
+            }
+        } if (!haseCheckedOutBooks) {
+            System.out.println("No checked out books yet.");
+            return;
+        }
+        System.out.println();
+        System.out.println("pleas select\nC to check in\nX to exit");
+       String userInput = input.nextLine();
+        if (userInput.equalsIgnoreCase("c")){
+            System.out.println("Thank you! Please enter book id Id: ");
+            int checkedOutBookIdInput = input.nextInt();
+            input.nextLine();
+            if (checkedOutBookIdInput <1 || checkedOutBookIdInput>books.length){
+                System.out.println("Invalid input");
+            return;}
+
+                Book selectedBook = books[checkedOutBookIdInput-1];
+                if (selectedBook.isCheckedOut()){
+                    selectedBook.setCheckedOut(false);
+                    selectedBook.setCheckedOutTo("");
+                    System.out.println("Thank you! Book returned successfully.");
+                }else {
+                    System.out.println("This book is not checked out.");
+                }
+
+            }else if (userInput.equalsIgnoreCase("x")) {
+            return;}
+        else {
+            System.out.println("invalid input ");
+        }
+        }
+
+   }
+
+ /*
                 String userInput = input.nextLine();
-                if (userInput.equalsIgnoreCase("c")){
-                    System.out.println("Thank you! Please enter book id Id: ");
-                    int checkedOutBookIdInput = input.nextInt();
-                    input.nextLine();
-                    if (books[checkedOutBookIdInput].isCheckedOut() == true){
-                        books[checkedOutBookIdInput].setCheckedOut(false);
+
+                    if (books[checkedOutBookIdInput - 1].isCheckedOut() == true){
+                        books[checkedOutBookIdInput - 1].setCheckedOut(false);
                         System.out.println("Thank you!");
                     }
-                } else if (userInput.equalsIgnoreCase("x")) {
-                    return;
-                }
-                else {
-                    System.out.println("invalid input ");
-                }
-            }
-        }
-        System.out.println("No chacked out books yet. ");
+
+                }*/
 
 
-        input.close();
-    }
 
-}
+
+
