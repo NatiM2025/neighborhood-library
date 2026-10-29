@@ -1,6 +1,7 @@
 package com.pluralsight;
 
 import java.util.Scanner;
+import java.util.SortedMap;
 
 public class Main {
     private static Book[] books = new Book[20];
@@ -86,7 +87,15 @@ public class Main {
             System.out.println();
         System.out.println("Pleas select a book to checkout or 0 to exit");
         int userSelection = input.nextInt();
-        if (userSelection == 0){
+        if (userSelection == 0 ){
+            return;
+        }
+        if (userSelection < 1 || userSelection > books.length){
+            System.out.println("Invalid book id");
+            return;
+        }
+        if ((books[userSelection-1].isCheckedOut())) {
+            System.out.println("This book is already checked out.");
             return;
         }
         input.nextLine();
@@ -146,15 +155,7 @@ public class Main {
 
    }
 
- /*
-                String userInput = input.nextLine();
 
-                    if (books[checkedOutBookIdInput - 1].isCheckedOut() == true){
-                        books[checkedOutBookIdInput - 1].setCheckedOut(false);
-                        System.out.println("Thank you!");
-                    }
-
-                }*/
 
 
 
